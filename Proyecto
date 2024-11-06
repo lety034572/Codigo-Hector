@@ -1,3 +1,4 @@
 #include "stdio.h"
-void main()
-{int 
+void main(){
+  char(20) user, pass;
+}
