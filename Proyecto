@@ -4,179 +4,189 @@
 #include <string.h>
 
 void main(){
-    int i, Op, Total, Uni[10], Bandera;
+    int i, Op, Total, Uni[10], Bandera, Intentos;
     float Precio[10];
-    char Clav[10], Nom[40], User[15], Pass[6], OpInt, ClavBusq[10];
+    char Clav[10], Nom[40], OpInt, ClavBusq[10], UsOp[15], PassOp[6];
+	char User[4][15] = {"emi.aizpuru", "angy.bate", "lety_baez", "val.gcald"};
+	char Pass[4][6] = {"Kos201", "Mushu2", "LBF503", "F1TFWT"};
     Total= 0;
 
     printf("\n\t\t\t\t\t\t\t\t\tSistema de almacenamiento.\n");
-    printf("\n Inicia Sesión \n");
-    printf("\n Usuario: ");
-    //scanf("%c")
-    printf("\n Contraseña: ");
-    //scanf("%c")
 
-    do{
-	printf("\n 1. Altas \n 2. Bajas \n 3. Cambios \n 4. Desplegado \n 5. Pedidos \n 6. Salir \n Elige el número de la opción que deseas realizar. \n");
-	scanf("%d", &Op);
+	Intentos = 1;
+	do{
+		printf("\n Inicia Sesión \n");
+		printf("\n Usuario: ");
+		scanf("%s", &UsOp);
+		printf("\n Contraseña: ");
+		scanf("%s", &PassOp);
+
+		for(i=0; i<4; i++){
+			if((UsOp==User[i]) && (PassOp==Pass[i])){
+				printf("\n Bienvenid@ %s! \n", User[i]);
+				do{
+					printf("\n 1. Altas \n 2. Bajas \n 3. Cambios \n 4. Desplegado \n 5. Pedidos \n 6. Salir \n Elige el número de la opción que deseas realizar. \n");
+					scanf("%d", &Op);
 	
-	switch(Op){
-		case 1:	//Altas
-			if (Total<=10){
-				printf("\n Menú de Altas \n");
+					switch(Op){
+						case 1:	//Altas
+							if (Total<=10){
+								printf("\n Menú de Altas \n");
 
-                do{
-                    printf("\n Que desea dar de alta? \n a. Nueva Pieza \t b. Agregar Unidades \n");
-                    scanf("%c", &OpInt);
+								do{
+									printf("\n Que desea dar de alta? \n a. Nueva Pieza \t b. Agregar Unidades \n");
+									scanf("%c", &OpInt);
 
-                    switch (OpInt){
-                    case 'a':
-                        printf("\n Dame el nombre del producto a registrar, su clave, su precio y la cantidad de unidades existentes. \n");
-                        scanf("%c, %c, %f, %d", &Nom[Total], &Clav[Total], &Precio[Total], &Uni[Total]);
-                       //Revisar el funcionamiento de los vectores de caracteres.
-                        Total++; 
-                        break;
-                    case 'b':
-                        //Desplegar opciones de clave para agregar unidades.
-                        break;
-                    default:
-                        printf("\n Elija una opcion valida. \n");
-                        break;
-                    }
-                }while((OpInt!='a') && (OpInt!='b'));
-			} else {
-				printf("\n Almacén Lleno. \n");
-			}
-			break;
-		case 2: //Bajas
-			if(Total == 0){
-				printf("\n Almacén Vacío \n");
-			} else{
-				Bandera = 0;
-
-				printf("\n Menú de Bajas \n");
-				printf("\n Dame la clave del producto a eliminar. \n");
-				scanf("%c", &ClavBusq[10]);
-
-				for(i=0; i<Total; i++){
-					if(ClavBusq == Clav[i]){ //Esto probablemente esta mal lol, pero se entiende el punto de lo que debe hacer.
-						do{
-							printf("\n %c \t %c \t $%.2f \t %d unidades \n", Clav[i], Nom[i], Precio[i], Uni[i]);
-							printf("\n ¿Está seguro de querer eliminar el producto? \n");
-							printf("\n 1. Sí \t 2. No \n");
-							scanf("%d", &OpInt);
-
-							switch(OpInt){
-								case '1': 
-									//un for para eliminar lol
-								
-									printf("\n El producto ha sido eliminado. \n");
-									Total= Total - 1;
-									i = 50;
-									break;
-								case 2:
-									printf("\n Dame la clave del producto a eliminar. \n");
-									scanf("%c", &ClavBusq[10]);
-									i=0;
-									break;
-								default:
-									printf("\n Error. \n Por favor elija una opción válida. \n");
-									break;
+									switch (OpInt){
+										case 'a':
+											printf("\n Dame el nombre del producto a registrar, su clave, su precio y la cantidad de unidades existentes. \n");
+											scanf("%c, %c, %f, %d", &Nom[Total], &Clav[Total], &Precio[Total], &Uni[Total]);
+											//Revisar el funcionamiento de los vectores de caracteres.
+											Total++; 
+											break;
+										case 'b':
+											//Desplegar opciones de clave para agregar unidades.
+											break;
+										default:
+											printf("\n Elija una opcion valida. \n");
+											break;
+									}
+								}while((OpInt!='a') && (OpInt!='b'));
+							} else {
+								printf("\n Almacén Lleno. \n");
 							}
+							break;
+						case 2: //Bajas
+							if(Total == 0){
+								printf("\n Almacén Vacío \n");
+							} else{
+								Bandera = 0;
 
-							Bandera = 1;
-						}while((OpInt!=1) && (OpInt!=2));
-					}
-				}
+								printf("\n Menú de Bajas \n");
+								printf("\n Dame la clave del producto a eliminar. \n");
+								scanf("%c", &ClavBusq[10]);
 
-				if(Bandera == 0){
-					printf("\n El producto no existe. \n");	
-				}
-			}
-			break;	
-		case 3: //Cambios
-			if(Total == 0){
-				printf("\n Almacén Vacío \n");
-			} else{
-				printf("\n Menú de Cambios \n");
+								for(i=0; i<Total; i++){
+									if(ClavBusq == Clav[i]){ //Esto probablemente esta mal lol, pero se entiende el punto de lo que debe hacer.
+										do{
+											printf("\n %c \t %c \t $%.2f \t %d unidades \n", Clav[i], Nom[i], Precio[i], Uni[i]);
+											printf("\n ¿Está seguro de querer eliminar el producto? \n");
+											printf("\n 1. Sí \t 2. No \n");
+											scanf("%d", &OpInt);
+
+											switch(OpInt){
+												case '1': 
+													//un for para eliminar lol
+													printf("\n El producto ha sido eliminado. \n");
+													Total= Total - 1;
+													i = 50;
+													break;
+												case '2':
+													printf("\n Dame la clave del producto a eliminar. \n");
+													scanf("%c", &ClavBusq[10]);
+													i=0;
+													break;
+												default:
+													printf("\n Error. \n Por favor elija una opción válida. \n");
+													break;
+											}
+
+											Bandera = 1;
+										}while((OpInt!=1) && (OpInt!=2));
+									}
+								}
+
+								if(Bandera == 0){
+									printf("\n El producto no existe. \n");	
+								}
+							}
+							break;	
+						case 3: //Cambios
+							if(Total == 0){
+								printf("\n Almacén Vacío \n");
+							} else{
+								printf("\n Menú de Cambios \n");
                 
-                do{
-                    printf("\n Que deseas realizar? \n a. Cambio de Contrasena \t b. Cambio en Productos \n");
-                    scanf("%c", &OpInt);
+								do{
+									printf("\n Que deseas realizar? \n a. Cambio de Contrasena \t b. Cambio en Productos \n");
+									scanf("%c", &OpInt);
 
-                    switch (OpInt){
-                        case 'a':
-                            //lol aun no se aaaaa
-                            break;
-                        case 'b':
-                            break;
-                        default:
-                            printf("\n Elija una opcion correcta \n");
-                            break;
-                    }
-                }while((OpInt!='a') && (OpInt!='b'));
-				printf("\n Inserta la clave del producto que deseas modificar: \n");
-				scanf("%d", &ClavBusq);
+									switch (OpInt){
+										case 'a':
+											//lol aun no se aaaaa
+											break;
+										case 'b':
+											printf("\n Inserta la clave del producto que deseas modificar: \n");
+											scanf("%d", &ClavBusq);
 
-				for(i=0; i<Total; i++){
-					if(ClavBusq == Clav[i]){ //Again, esto esta mal.
-						do{
-							printf("\n %c \t %c \t $%f \t %d unidades \n ¿Qué deseas cambiar? \n", Clav[i], Nom[i], Precio[i], Uni[i]);
+											for(i=0; i<Total; i++){
+												if(ClavBusq == Clav[i]){ //Again, esto esta mal.
+													do{
+														printf("\n %c \t %c \t $%f \t %d unidades \n ¿Qué deseas cambiar? \n", Clav[i], Nom[i], Precio[i], Uni[i]);
 
-							printf("\n 1. Nombre \n 2. Precio \n 3. Unidades \n Elige el número de la opción que deseas realizar. \n");
-							scanf("%d", &OpInt);
+														printf("\n 1. Nombre \n 2. Precio \n 3. Unidades \n Elige el número de la opción que deseas realizar. \n");
+														scanf("%d", &OpInt);
 							
-							switch(OpInt){
-								case 1:
-									printf("\n Cambio de Nombre \n");
-									break;
-								case 2:
-									printf("\n Cambio de Precio \n");
-									break;
-								case 3:
-									printf("\n Cambio de Unidades \n");
-									printf("\n Las unidades actuales son %d. Dame la nueva cntidad: \n", Uni[i]);
-									scanf("%d", &Uni[i]);
-									break;
-								default:
-									printf("\n Error. \n Por favor elija una opción válida. \n");
-									break;
-							}
-						}while((OpInt!=1) && (OpInt!=2) && (OpInt!=3));
+														switch(OpInt){
+															case 1:
+																printf("\n Cambio de Nombre \n");
+																break;
+															case 2:
+																printf("\n Cambio de Precio \n");
+																break;
+															case 3:
+																printf("\n Cambio de Unidades \n");
+																printf("\n Las unidades actuales son %d. Dame la nueva cntidad: \n", Uni[i]);
+																scanf("%d", &Uni[i]);
+																break;
+															default:
+																printf("\n Error. \n Por favor elija una opción válida. \n");
+																break;
+														}
+													}while((OpInt!=1) && (OpInt!=2) && (OpInt!=3));
 
-					i=50;
-					} else{
-						printf("\n El producto no existe. \n");
+													i=50;
+												} else{
+													printf("\n El producto no existe. \n");
+												}
+											}
+											break;
+										default:
+											printf("\n Elija una opcion correcta \n");
+											break;
+									}
+								}while((OpInt!='a') && (OpInt!='b'));
+							}
+							break;
+						case 4: //Desplegado
+							if(Total == 0){
+								printf("\n Almacén Vacío \n");
+							} else{
+								printf("\n Menú de Desplegado \n");
+		        			     //Sigo sin entender este modulo jajan't pipipipipipi
+							}
+							break;
+						case 5: // Pedidos
+							if (Total == 0){
+								printf("\n Almacén Vacío \n");
+							} else{
+								printf("\n Menú de Pedidos \n");
+								//No recuerdo que va aca aaaaaaaaaaaaa
+							}
+							break;
+						case 6:
+							printf("\n Saliendo del programa... \n");
+							break;
+						default: 
+							printf("\n Error. \n Por favor elija una opción válida. \n");
+							break;
 					}
-				}
+	
+					getch(); // NO ES ESTA FUNCION AAAAAA
+					system("cls");
+	
+				}while(Op!=6);
 			}
-			break;
-		case 4: //Desplegado
-			if(Total == 0){
-				printf("\n Almacén Vacío \n");
-			} else{
-				printf("\n Menú de Desplegado \n");
-                //Sigo sin entender este modulo jajan't pipipipipipi
-            }
-			break;
-		case 5: // Pedidos
-			if (Total == 0){
-				printf("\n Almacén Vacío \n");
-			} else{
-				printf("\n Menú de Pedidos \n");
-				//No recuerdo que va aca aaaaaaaaaaaaa
-            }
-            break;
-		case 6:
-			printf("\n Saliendo del programa... \n");
-			break;
-		default: 
-			printf("\n Error. \n Por favor elija una opción válida. \n");
-			break;
-	}
-	
-	getch(); // NO ES ESTA FUNCION AAAAAA
-	system("cls");
-	
-	}while(Op!=6);
+		}
+	}while(Intentos<=3);
 }
