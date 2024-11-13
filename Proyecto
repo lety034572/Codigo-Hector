@@ -2,28 +2,34 @@
 #include <conio.h>
 #include <windows.h>
 #include <string.h>
+#include <locale.h>
+#include <time.h>
 
 void main(){
-    int i, Op, Total, Uni[10], Bandera, Intentos;
+    int i, a, Op, Total, Uni[10], Bandera;
     float Precio[10];
-    char Clav[10], Nom[40], OpInt, ClavBusq[10], UsOp[15], PassOp[6];
-	char User[4][15] = {"emi.aizpuru", "angy.bate", "lety_baez", "val.gcald"};
-	char Pass[4][6] = {"Kos201", "Mushu2", "LBF503", "F1TFWT"};
+    char Clav[10][5], Nom[10][40], OpInt, ClavBusq[10];
+	int Intentos = 0;
+	int accesoCorrecto = 0;
+    char UsOp[30], PassOp[30];
+    char User[4][30] = {"emi.aizpuru", "angy.bate", "lety_baez", "val.gcald"};
+    char Pass[4][10] = {"Kos201", "Mushu2", "LBF503", "F1TFWT"};
     Total= 0;
 
-    printf("\n\t\t\t\t\t\t\t\t\tSistema de almacenamiento.\n");
+    printf("\n\t\t\t\t\t\t\t\t\tSistema de almacenamiento.\n"); //ESTO VA CENTRADOOO
+	printf("\nNJEANAF "); //ESTO VA ALINEADO A LA DERECHA
 
-	Intentos = 1;
-	do{
+	while(Intentos<3){
 		printf("\n Inicia Sesión \n");
-		printf("\n Usuario: ");
-		scanf("%s", &UsOp);
-		printf("\n Contraseña: ");
-		scanf("%s", &PassOp);
+        printf("\n Usuario: ");
+        scanf("%s", UsOp); 
+        printf("\n Contraseña: ");
+        scanf("%s", PassOp);  
 
-		for(i=0; i<4; i++){
-			if((UsOp==User[i]) && (PassOp==Pass[i])){
-				printf("\n Bienvenid@ %s! \n", User[i]);
+		for(int i = 0; i < 4; i++){
+			if(strcmp(UsOp, User[i]) == 0 && strcmp(PassOp, Pass[i]) == 0){
+				system("cls");
+				printf("\n Bienvenid@ @%s! \n", User[i]);
 				do{
 					printf("\n 1. Altas \n 2. Bajas \n 3. Cambios \n 4. Desplegado \n 5. Pedidos \n 6. Salir \n Elige el número de la opción que deseas realizar. \n");
 					scanf("%d", &Op);
@@ -34,21 +40,30 @@ void main(){
 								printf("\n Menú de Altas \n");
 
 								do{
-									printf("\n Que desea dar de alta? \n a. Nueva Pieza \t b. Agregar Unidades \n");
+									printf("\n ¿Qué desea dar de alta? \n a. Nueva Pieza \t b. Agregar Unidades \n");
 									scanf("%c", &OpInt);
 
 									switch (OpInt){
 										case 'a':
 											printf("\n Dame el nombre del producto a registrar, su clave, su precio y la cantidad de unidades existentes. \n");
-											scanf("%c, %c, %f, %d", &Nom[Total], &Clav[Total], &Precio[Total], &Uni[Total]);
-											//Revisar el funcionamiento de los vectores de caracteres.
+											scanf("%s, %s, %f, %d", &Nom[Total], &Clav[Total], &Precio[Total], &Uni[Total]);
 											Total++; 
 											break;
 										case 'b':
-											//Desplegar opciones de clave para agregar unidades.
+											if (Total==0){
+												printf("\n No existen piezas registradas. \n");
+												OpInt = 'c';
+											} else{
+												for(a=0; a<=10 ;a++){
+													printf("\n %s \n", Clav[a]);
+												}
+												
+												printf("\n Elija la clave del producto. \n");
+											}
+											
 											break;
 										default:
-											printf("\n Elija una opcion valida. \n");
+											printf("\n Elija una opcion válida. \n");
 											break;
 									}
 								}while((OpInt!='a') && (OpInt!='b'));
@@ -186,7 +201,21 @@ void main(){
 					system("cls");
 	
 				}while(Op!=6);
+			accesoCorrecto = 1;
+			break;
 			}
 		}
-	}while(Intentos<=3);
+
+		if (accesoCorrecto) {
+            break;  
+        } else {
+            printf("\n Error: Usuario o contraseña incorrectos. \n");
+            Intentos++;
+            printf("\n Intentos restantes: %d \n", 3 - Intentos);
+        }
+	}
+
+	if (Intentos >= 3){
+        printf("\n Has alcanzado el límite de intentos. Acceso denegado. \n");
+    }
 }
